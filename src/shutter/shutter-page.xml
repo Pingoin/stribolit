@@ -1,6 +1,6 @@
-<Page
-    navigatingTo="onNavigatingTo"
-    xmlns="http://schemas.nativescript.org/tns.xsd">
+<Page navigatingTo="onNavigatingTo"
+    xmlns="http://schemas.nativescript.org/tns.xsd"
+    xmlns:df="nativescript-ui-dataform">
 
     <ActionBar>
         <NavigationButton visibility="hidden"></NavigationButton>
@@ -10,8 +10,10 @@
         </GridLayout>
     </ActionBar>
 
-    <GridLayout class="page__content">
-        <Label class="page__content-icon fas" text="&#xf013;"></Label>
-        <Label class="page__content-placeholder" text="{{ date }}"></Label>
+    <GridLayout class="page__content" columns="auto,auto" rows="auto,auto">
+        <GridLayout class="page__content" columns="auto,auto" rows="auto,auto">
+            <df:RadDataForm row="0" id="myDataForm" source="{{ shutterData }}" />
+        </GridLayout>
+        <Label row="1" text="{{npfValue}}"/>
     </GridLayout>
 </Page>
