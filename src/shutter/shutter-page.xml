@@ -10,10 +10,12 @@
         </GridLayout>
     </ActionBar>
 
-    <GridLayout class="page__content" columns="auto,auto" rows="auto,auto">
+    <StackLayout class="page__content" height="100%">
         <GridLayout class="page__content" columns="auto,auto" rows="auto,auto">
-            <df:RadDataForm row="0" id="myDataForm" source="{{ shutterData }}" propertyCommitted="{{ dfPropertyCommit }}" commitMode="Immediate"/>
+            <df:RadDataForm row="0" id="myDataForm" source="{{ shutterData }}" propertyCommitted="{{ dfPropertyCommit }}" commitMode="Immediate" metadata="{{ shutterMetadata }}"/>
         </GridLayout>
-        <Label row="1" text="{{npfValue}}"/>
-    </GridLayout>
+        <Label class="line"/>
+        <Label text="NPF-Regel:"/>
+        <Label text="{{npfValue}}"/>
+    </StackLayout>
 </Page>

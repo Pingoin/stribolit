@@ -41,3 +41,8 @@
 .nt-drawer__header-image {
   color: const(grey);
 }
+
+.line {
+  background: linear-gradient(to left, orangered, green, lightblue);
+  height: 2px;
+}
