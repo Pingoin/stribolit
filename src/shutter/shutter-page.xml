@@ -12,7 +12,7 @@
 
     <GridLayout class="page__content" columns="auto,auto" rows="auto,auto">
         <GridLayout class="page__content" columns="auto,auto" rows="auto,auto">
-            <df:RadDataForm row="0" id="myDataForm" source="{{ shutterData }}" />
+            <df:RadDataForm row="0" id="myDataForm" source="{{ shutterData }}" propertyCommitted="{{ dfPropertyCommit }}" commitMode="Immediate"/>
         </GridLayout>
         <Label row="1" text="{{npfValue}}"/>
     </GridLayout>
