@@ -1,5 +1,5 @@
 import { Observable } from '@nativescript/core'
-
+import { localize } from '@nativescript/localize'
 import { SelectedPageService } from '../shared/selected-page-service'
 
 export class BrowseViewModel extends Observable {
@@ -8,4 +8,6 @@ export class BrowseViewModel extends Observable {
 
     SelectedPageService.getInstance().updateSelectedPage('Browse')
   }
+  userName=localize("name");
+
 }

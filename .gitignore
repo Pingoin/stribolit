@@ -26,3 +26,4 @@ typings/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+App_Resources/Android/src/main/res/*/strings.xml
