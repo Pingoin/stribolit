@@ -9,7 +9,7 @@ android {
   // ndkVersion ""
 
   defaultConfig {
-    minSdkVersion 17
+    minSdkVersion 22
     // targetSdkVersion 32
 
     // Version Information
@@ -18,6 +18,11 @@ android {
     
     generatedDensities = []
   }
+    // Set minimum JVM level to ensure availability of, for example, lambda expressions
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 
   aaptOptions {
     additionalParameters "--no-version-vectors"

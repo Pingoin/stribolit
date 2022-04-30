@@ -17,5 +17,9 @@
         <Label class="line"/>
         <Label text="NPF-Regel:"/>
         <Label text="{{npfValue}}"/>
+        <Label text="500er-Regel:"/>
+        <Label text="{{rule500}}"/>
+        <Label text="600er-Regel:"/>
+        <Label text="{{rule600}}"/>
     </StackLayout>
 </Page>
