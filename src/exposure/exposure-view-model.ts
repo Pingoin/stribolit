@@ -4,22 +4,22 @@ import { Database } from "../services/database";
 
 import { SelectedPageService } from '../shared/selected-page-service'
 
-export class ShutterViewModel extends Observable {
+export class ExposureViewModel extends Observable {
   constructor() {
     super();
-    SelectedPageService.getInstance().updateSelectedPage('shutter');
-    this.shutterData.camera=Database.getInstance().cameraList.map(x => x.name)[0];
+    SelectedPageService.getInstance().updateSelectedPage('exposure');
+    this.exposureData.camera=Database.getInstance().cameraList.map(x => x.name)[0];
     this.dfPropertyCommit();
   }
 
-  shutterData = {
+  exposureData = {
     focalLength: 1200,
     aperture: 208,
     camera: "",
     declination: 0
   }
 
-  shutterMetadata = {
+  exposureMetadata = {
     'isReadOnly': false,
     'commitMode': 'Immediate',
     'validationMode': 'Immediate',
@@ -40,10 +40,10 @@ export class ShutterViewModel extends Observable {
   @ObservableProperty() rule600 = "";
 
   dfPropertyCommit(): void {
-    let fNumber = this.shutterData.focalLength / this.shutterData.aperture;
-    const camera = Database.getInstance().getCameraByName(this.shutterData.camera);
-    const focalLength = this.shutterData.focalLength;
-    const declination = this.shutterData.declination;
+    let fNumber = this.exposureData.focalLength / this.exposureData.aperture;
+    const camera = Database.getInstance().getCameraByName(this.exposureData.camera);
+    const focalLength = this.exposureData.focalLength;
+    const declination = this.exposureData.declination;
     const pixelSize = (camera.sensorSize.width / camera.pixelCount.width + camera.sensorSize.height / camera.pixelCount.height) * 500;
     const npfValue = (16.856 * fNumber + 0.0997 * focalLength + 13.713 * pixelSize) / (focalLength * Math.cos(declination / 180 * Math.PI));
     const rule500 = 500 / focalLength;

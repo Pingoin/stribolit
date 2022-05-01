@@ -1,5 +1,8 @@
 {
   "app.name": "Stribolit",
   "I am %s": "Ich bin %s",
-  "HelloWorld":"Hallo Welt"
+  "HelloWorld":"Hallo Welt",
+  "Exposure":"Belichtung",
+  "Exposure time":"Belichtungsdauer",
+  "Calculations":"Berechnungen"
 }

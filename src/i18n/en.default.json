@@ -2,6 +2,9 @@
     "app.name": "Stribolit",
     "I am %s": "I am %s",
     "name": "User Name",
-    "HelloWorld":"Hello World"
+    "HelloWorld":"Hello World",
+    "Exposure":"Exposure",
+    "Exposure time":"Exposure Time",
+    "Calculations":"Calculations"
   }
   

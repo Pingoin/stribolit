@@ -1,11 +1,11 @@
 import { RadSideDrawer } from 'nativescript-ui-sidedrawer'
 import { Application, EventData, NavigatedData, Page } from '@nativescript/core'
 
-import { SearchViewModel } from './search-view-model'
+import { ExposureViewModel } from './exposure-view-model'
 
 export function onNavigatingTo(args: NavigatedData) {
   const page = <Page>args.object
-  page.bindingContext = new SearchViewModel()
+  page.bindingContext = new ExposureViewModel()
 }
 
 export function onDrawerButtonTap(args: EventData) {

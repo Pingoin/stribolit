@@ -5,16 +5,16 @@
     <ActionBar>
         <NavigationButton visibility="hidden"></NavigationButton>
         <GridLayout columns="50, *">
-            <Label class="action-bar-title" text="shutter Speed Calculatrions" colSpan="2"/>
+            <Label class="action-bar-title" text="{{L('Exposure time') + ' '+ L('Calculations') }}" colSpan="2"/>
             <Label class="fas" text="&#xf0c9;" tap="onDrawerButtonTap"/>
         </GridLayout>
     </ActionBar>
 
     <StackLayout class="page__content" height="100%">
         <GridLayout class="page__content" columns="auto,auto" rows="auto,auto">
-            <df:RadDataForm row="0" id="myDataForm" source="{{ shutterData }}" propertyCommitted="{{ dfPropertyCommit }}" commitMode="Immediate" metadata="{{ shutterMetadata }}"/>
+            <df:RadDataForm row="0" id="myDataForm" source="{{ exposureData }}" propertyCommitted="{{ dfPropertyCommit }}" commitMode="Immediate" metadata="{{ exposureMetadata }}"/>
         </GridLayout>
-        <Label class="line"/>
+        <StackLayout class="hr" />
         <Label text="NPF-Regel:"/>
         <Label text="{{npfValue}}"/>
         <Label text="500er-Regel:"/>
