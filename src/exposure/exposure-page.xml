@@ -5,7 +5,7 @@
     <ActionBar>
         <NavigationButton visibility="hidden"></NavigationButton>
         <GridLayout columns="50, *">
-            <Label class="action-bar-title" text="{{L('Exposure time') + ' '+ L('Calculations') }}" colSpan="2"/>
+            <Label class="action-bar-title" text="{{L('exposureTime') + ' '+ L('calculations') }}" colSpan="2"/>
             <Label class="fas" text="&#xf0c9;" tap="onDrawerButtonTap"/>
         </GridLayout>
     </ActionBar>
@@ -15,11 +15,11 @@
             <df:RadDataForm row="0" id="myDataForm" source="{{ exposureData }}" propertyCommitted="{{ dfPropertyCommit }}" commitMode="Immediate" metadata="{{ exposureMetadata }}"/>
         </GridLayout>
         <StackLayout class="hr" />
-        <Label text="NPF-Regel:"/>
+        <Label text="{{ L('npfRule') + ':'}} "/>
         <Label text="{{npfValue}}"/>
-        <Label text="500er-Regel:"/>
+        <Label text="{{ L('rule500') + ':'}} "/>
         <Label text="{{rule500}}"/>
-        <Label text="600er-Regel:"/>
+        <Label text="{{ L('rule600') + ':'}} "/>
         <Label text="{{rule600}}"/>
     </StackLayout>
 </Page>

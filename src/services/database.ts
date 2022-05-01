@@ -1,4 +1,5 @@
-import { CouchBase, ConcurrencyMode } from '@triniwiz/nativescript-couchbase';
+import { CouchBase } from '@triniwiz/nativescript-couchbase';
+import { newTelescope, Telescope } from '../models/telescope.model';
 import { Camera, isCamera } from '../models/camera.model';
 
 export class Database {
@@ -52,12 +53,17 @@ export class Database {
 
     addCamera(cam: Camera) {
         const id = cam.interface + cam.name;
+        this.addOrUpdateDocument(cam,id);
+    }
+
+    private addOrUpdateDocument(doc:unknown, id:string){
         if (this.database.getDocument(id)) {
-            this.database.updateDocument(id, cam);
+            this.database.updateDocument(id, doc);
         } else {
-            this.database.createDocument(cam, id);
+            this.database.createDocument(doc, id);
         }
     }
+
     getCameraByName(name: string): Camera {
         return <Camera>this.database.getDocument("Camera" + name) || {
             interface: "Camera",
@@ -72,4 +78,46 @@ export class Database {
             name: "Generic"
         };;
     }
+
+    get telescopeList():Telescope[]{
+
+        return [
+            {
+                interface:"Telescope",
+                name:"Dobson",
+                aperture:208,
+                focalLength:1200,
+                variableFocalLength:false,
+                minFocalLength:0,
+                maxFocalLength:0,
+                variableFNumber:false,
+                fNumberMin:0,
+                fNumberMax:0,
+            },
+            {
+                interface:"Telescope",
+                name:"generic",
+                aperture:38,
+                focalLength:0,
+                variableFocalLength:true,
+                minFocalLength:18,
+                maxFocalLength:135,
+                variableFNumber:true,
+                fNumberMin:3.5,
+                fNumberMax:5.6,
+            },
+
+        ]
+    }
+
+    addTelescope(telescope: Telescope) {
+        const id = telescope.interface + telescope.name;
+        this.addOrUpdateDocument(telescope,id);
+    }
+
+    getTelescopeByName(name:string):Telescope{
+        return this.telescopeList.filter(telescope=>telescope.name===name)[0]||newTelescope(name);
+    }
+
+
 }

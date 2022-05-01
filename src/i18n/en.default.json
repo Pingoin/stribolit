@@ -3,8 +3,15 @@
     "I am %s": "I am %s",
     "name": "User Name",
     "HelloWorld":"Hello World",
-    "Exposure":"Exposure",
-    "Exposure time":"Exposure Time",
-    "Calculations":"Calculations"
+    "exposure":"Exposure",
+    "exposureTtime":"Exposure Time",
+    "calculations":"Calculations",
+    "npfRule":"NPF-rule",
+    "rule500":"Rule 500",
+    "rule600":"Rule 600",
+    "cameraModule":"Camera Module",
+    "settings":"Settings",
+    "telescope":"Telescope",
+    "focalLength":"Focal Length"
   }
   
