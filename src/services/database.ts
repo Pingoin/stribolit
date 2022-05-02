@@ -96,6 +96,18 @@ export class Database {
             },
             {
                 interface:"Telescope",
+                name:"Refraktor",
+                aperture:70,
+                focalLength:400,
+                variableFocalLength:false,
+                minFocalLength:0,
+                maxFocalLength:0,
+                variableFNumber:false,
+                fNumberMin:0,
+                fNumberMax:0,
+            },
+            {
+                interface:"Telescope",
                 name:"generic",
                 aperture:38,
                 focalLength:0,

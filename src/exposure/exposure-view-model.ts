@@ -1,24 +1,24 @@
-import { Observable } from '@nativescript/core'
+import { Color, Observable, Page } from '@nativescript/core'
 import { ObservableProperty } from '../shared/observable-property-decorator';;
 import { Database } from "../services/database";
 import { localize } from '@nativescript/localize';
 
 import { SelectedPageService } from '../shared/selected-page-service'
+import { EntityProperty, RadDataForm } from 'nativescript-ui-dataform';
 
 export class ExposureViewModel extends Observable {
-  constructor() {
+  constructor(private dataForm: RadDataForm) {
     super();
     SelectedPageService.getInstance().updateSelectedPage('exposure');
-    this.exposureData.camera=Database.getInstance().cameraList.map(x => x.name)[0];
-    this.exposureData.telescope=Database.getInstance().telescopeList.map(x => x.name)[0];
-    this.dfPropertyCommit();
+    this.exposureData.camera = Database.getInstance().cameraList.map(x => x.name)[0];
+    this.exposureData.telescope = Database.getInstance().telescopeList.map(x => x.name)[0];
+    setTimeout(()=>this.dfPropertyCommit(),1000);
   }
-
-  exposureData = {
-    focalLength: 0,
-    fNumber:0,
+  @ObservableProperty() exposureData = {
+    focalLength: 0.5,
+    fNumber: 0.5,
     camera: "",
-    telescope:"",
+    telescope: "",
     declination: 0,
   }
 
@@ -46,28 +46,19 @@ export class ExposureViewModel extends Observable {
           name: 'focalLength',
           displayName: localize('focalLength'),
           index: 2,
-          visible:false,
-          editor: 'Label',
-          editorParams: {
-            minimum: 0,
-            maximum: 20,
-          }
+          editor: 'Decimal',
         },
         {
           name: 'fNumber',
           displayName: localize('fNumber'),
           index: 3,
-          editor: 'Label',
-          editorParams: {
-            minimum: 0,
-            maximum: 20,
-          }
+          editor: 'Decimal',
         },
         {
           name: 'declination',
           displayName: localize('declination'),
           index: 4,
-          editor: 'Slider',
+          editor: 'Decimal',
           editorParams: {
             minimum: 0,
             maximum: 90,
@@ -75,45 +66,55 @@ export class ExposureViewModel extends Observable {
         },
       ]
   }
-
   @ObservableProperty() npfValue = "";
   @ObservableProperty() rule500 = "";
   @ObservableProperty() rule600 = "";
 
+  lastTelescope="";
+
   dfPropertyCommit(): void {
     const camera = Database.getInstance().getCameraByName(this.exposureData.camera);
-    const telescope=Database.getInstance().getTelescopeByName(this.exposureData.telescope);
+    const telescope = Database.getInstance().getTelescopeByName(this.exposureData.telescope);
+    let focalLength = this.exposureData.focalLength;
+    let fNumber = this.exposureData.fNumber;
 
-    if(telescope.variableFocalLength){
-      this.exposureMetadata.propertyAnnotations[2].editor='Slider';
-      this.exposureMetadata.propertyAnnotations[2].editorParams.maximum=telescope.maxFocalLength;
-      this.exposureMetadata.propertyAnnotations[2].editorParams.minimum=telescope.minFocalLength;
-      if(this.exposureData.focalLength==0||this.exposureData.focalLength>telescope.maxFocalLength||this.exposureData.focalLength<telescope.minFocalLength){
-        this.exposureData.focalLength=telescope.minFocalLength;
-      }
-    }else{
-      this.exposureData.focalLength=telescope.focalLength;
-    }
-    const focalLength = this.exposureData.focalLength;
+    if(this.lastTelescope!=this.exposureData.telescope){
 
-    if(telescope.variableFNumber){
-      this.exposureMetadata.propertyAnnotations[3].editor='Slider';
-      this.exposureMetadata.propertyAnnotations[3].editorParams.maximum=telescope.fNumberMax;
-      this.exposureMetadata.propertyAnnotations[3].editorParams.minimum=telescope.fNumberMin;
-      if(this.exposureData.fNumber==0||this.exposureData.fNumber>telescope.fNumberMax||this.exposureData.fNumber<telescope.fNumberMin){
-        this.exposureData.fNumber=telescope.fNumberMin;
+      if (telescope.variableFocalLength) {
+        const property = <EntityProperty>this.dataForm.getPropertyByName("focalLength");
+        property.readOnly = false;
+        if (focalLength == 0 || focalLength > telescope.maxFocalLength || focalLength < telescope.minFocalLength) {
+          focalLength = telescope.minFocalLength;
+        }
+      } else {
+        const property = <EntityProperty>this.dataForm.getPropertyByName("focalLength");
+        property.readOnly = true;
+        focalLength = telescope.focalLength;
       }
-    }else{
-      this.exposureData.fNumber= focalLength / telescope.aperture;
+
+      if (telescope.variableFNumber) {
+        const property = <EntityProperty>this.dataForm.getPropertyByName("fNumber");
+        property.readOnly = false;
+        if (fNumber == 0 || fNumber > telescope.fNumberMax || fNumber < telescope.fNumberMin) {
+          fNumber = telescope.fNumberMin;
+        }
+      } else {
+        const property = <EntityProperty>this.dataForm.getPropertyByName("fNumber");
+        property.readOnly = true;
+        fNumber = focalLength / telescope.aperture;
+      }
+      const newFormModel = {...this.exposureData,fNumber:fNumber,focalLength:focalLength};
+      this.set('exposureData', newFormModel);
+      this.dataForm.reload();
+      this.lastTelescope=this.exposureData.telescope
     }
 
     const declination = this.exposureData.declination;
-    const fNumber = this.exposureData.fNumber;
-
     const pixelSize = (camera.sensorSize.width / camera.pixelCount.width + camera.sensorSize.height / camera.pixelCount.height) * 500;
     const npfValue = (16.856 * fNumber + 0.0997 * focalLength + 13.713 * pixelSize) / (focalLength * Math.cos(declination / 180 * Math.PI));
     const rule500 = 500 / focalLength;
     const rule600 = 600 / focalLength;
+
     this.set("npfValue", Math.round(npfValue * 100) / 100 + " s");
     this.set("rule500", Math.round(rule500 * 100) / 100 + " s");
     this.set("rule600", Math.round(rule600 * 100) / 100 + " s");
