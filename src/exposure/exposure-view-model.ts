@@ -12,7 +12,7 @@ export class ExposureViewModel extends Observable {
     SelectedPageService.getInstance().updateSelectedPage('exposure');
     this.exposureData.camera = Database.getInstance().cameraList.map(x => x.name)[0];
     this.exposureData.telescope = Database.getInstance().telescopeList.map(x => x.name)[0];
-    setTimeout(()=>this.dfPropertyCommit(),1000);
+    setTimeout(() => this.dfPropertyCommit(), 1000);
   }
   @ObservableProperty() exposureData = {
     focalLength: 0.5,
@@ -66,11 +66,35 @@ export class ExposureViewModel extends Observable {
         },
       ]
   }
-  @ObservableProperty() npfValue = "";
-  @ObservableProperty() rule500 = "";
-  @ObservableProperty() rule600 = "";
 
-  lastTelescope="";
+  resultMetadata = {
+    isReadOnly: false,
+    commitMode: 'Immediate',
+    validationMode: 'Immediate',
+    propertyAnnotations:
+      [
+        {
+          name: 'npfValue',
+          displayName: localize('npfRule'),
+        },
+        {
+          name: 'rule500',
+          displayName: localize('rule500'),
+        },
+        {
+          name: 'rule600',
+          displayName: localize('rule600'),
+        },
+      ]
+  }
+
+  @ObservableProperty() resultData: {
+    npfValue: "",
+    rule500: "",
+    rule600: ""
+  };
+
+  lastTelescope = "";
 
   dfPropertyCommit(): void {
     const camera = Database.getInstance().getCameraByName(this.exposureData.camera);
@@ -78,7 +102,7 @@ export class ExposureViewModel extends Observable {
     let focalLength = this.exposureData.focalLength;
     let fNumber = this.exposureData.fNumber;
 
-    if(this.lastTelescope!=this.exposureData.telescope){
+    if (this.lastTelescope != this.exposureData.telescope) {
 
       if (telescope.variableFocalLength) {
         const property = <EntityProperty>this.dataForm.getPropertyByName("focalLength");
@@ -103,20 +127,25 @@ export class ExposureViewModel extends Observable {
         property.readOnly = true;
         fNumber = focalLength / telescope.aperture;
       }
-      const newFormModel = {...this.exposureData,fNumber:fNumber,focalLength:focalLength};
+      const newFormModel = { ...this.exposureData, fNumber: fNumber, focalLength: focalLength };
       this.set('exposureData', newFormModel);
       this.dataForm.reload();
-      this.lastTelescope=this.exposureData.telescope
+      this.lastTelescope = this.exposureData.telescope
     }
 
     const declination = this.exposureData.declination;
     const pixelSize = (camera.sensorSize.width / camera.pixelCount.width + camera.sensorSize.height / camera.pixelCount.height) * 500;
+
+
     const npfValue = (16.856 * fNumber + 0.0997 * focalLength + 13.713 * pixelSize) / (focalLength * Math.cos(declination / 180 * Math.PI));
     const rule500 = 500 / focalLength;
     const rule600 = 600 / focalLength;
 
-    this.set("npfValue", Math.round(npfValue * 100) / 100 + " s");
-    this.set("rule500", Math.round(rule500 * 100) / 100 + " s");
-    this.set("rule600", Math.round(rule600 * 100) / 100 + " s");
+    let result = {
+      npfValue: Math.round(npfValue * 100) / 100 + " s",
+      rule500: Math.round(rule500 * 100) / 100 + " s",
+      rule600: Math.round(rule600 * 100) / 100 + " s"
+    };
+    this.set("resultData", result);
   }
 }

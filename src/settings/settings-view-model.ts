@@ -6,6 +6,6 @@ export class SettingsViewModel extends Observable {
   constructor() {
     super()
 
-    SelectedPageService.getInstance().updateSelectedPage('Settings')
+    SelectedPageService.getInstance().updateSelectedPage('settings')
   }
 }

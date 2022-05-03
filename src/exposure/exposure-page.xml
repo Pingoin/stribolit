@@ -11,15 +11,8 @@
     </ActionBar>
 
     <StackLayout class="page__content" height="100%">
-        <GridLayout class="page__content" columns="auto,auto" rows="auto,auto">
             <df:RadDataForm row="0" id="myDataForm" source="{{ exposureData }}" propertyCommitted="{{ dfPropertyCommit }}" commitMode="Immediate" metadata="{{ exposureMetadata }}"/>
-        </GridLayout>
         <StackLayout class="hr" />
-        <Label text="{{ L('npfRule') + ':'}} "/>
-        <Label text="{{npfValue}}"/>
-        <Label text="{{ L('rule500') + ':'}} "/>
-        <Label text="{{rule500}}"/>
-        <Label text="{{ L('rule600') + ':'}} "/>
-        <Label text="{{rule600}}"/>
+        <df:RadDataForm row="0" id="myDataForm" source="{{ resultData }}" metadata="{{ resultMetadata }}" isReadOnly="true"/>
     </StackLayout>
 </Page>

@@ -1,8 +1,16 @@
 {
   "app.name": "Stribolit",
-  "I am %s": "Ich bin %s",
-  "HelloWorld":"Hallo Welt",
+  "home":"Start",
   "exposure":"Belichtung",
   "exposureTime":"Belichtungsdauer",
-  "calculations":"Berechnungen"
+  "calculations":"Berechnungen",
+  "npfRule":"NPF-Regel",
+  "rule500":"500er Regel",
+  "rule600":"600er Regel",
+  "cameraModule":"Kamere Modell",
+  "settings":"Einstellungen",
+  "telescope":"Teleskop",
+  "focalLength":"Brennweite",
+  "fNumber":"Blendenzahl",
+  "declination":"Deklination"
 }

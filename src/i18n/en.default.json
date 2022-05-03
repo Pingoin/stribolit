@@ -1,10 +1,8 @@
 {
     "app.name": "Stribolit",
-    "I am %s": "I am %s",
-    "name": "User Name",
-    "HelloWorld":"Hello World",
     "exposure":"Exposure",
-    "exposureTtime":"Exposure Time",
+    "home":"Home",
+    "exposureTime":"Exposure Time",
     "calculations":"Calculations",
     "npfRule":"NPF-rule",
     "rule500":"Rule 500",
@@ -12,6 +10,8 @@
     "cameraModule":"Camera Module",
     "settings":"Settings",
     "telescope":"Telescope",
-    "focalLength":"Focal Length"
+    "focalLength":"Focal Length",
+    "fNumber":"F-Number",
+    "declination":"Declination"
   }
   
