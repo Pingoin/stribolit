@@ -4,7 +4,7 @@ import { Database } from "../services/database";
 import { localize } from '@nativescript/localize';
 
 import { SelectedPageService } from '../shared/selected-page-service'
-import { EntityProperty, RadDataForm } from 'nativescript-ui-dataform';
+import { DataFormEventData, EntityProperty, RadDataForm } from 'nativescript-ui-dataform';
 
 export class ExposureViewModel extends Observable {
   constructor(private dataForm: RadDataForm) {
@@ -46,7 +46,7 @@ export class ExposureViewModel extends Observable {
           name: 'focalLength',
           displayName: localize('focalLength'),
           index: 2,
-          editor: 'Decimal',
+          editor: 'Decimal'
         },
         {
           name: 'fNumber',
@@ -148,4 +148,35 @@ export class ExposureViewModel extends Observable {
     };
     this.set("resultData", result);
   }
+
+  dfPropertyValidate(args:DataFormEventData) {
+    let validationResult=true;
+    const telescope = Database.getInstance().getTelescopeByName(this.exposureData.telescope);
+    let data=args.entityProperty as EntityProperty;
+
+    switch (args.propertyName) {
+      case 'focalLength':
+        const focalLength=(data.valueCandidate as number);
+        if ((focalLength>telescope.maxFocalLength || focalLength<telescope.minFocalLength )&& telescope.variableFocalLength){
+          data.errorMessage=localize("the focal legth must be between %s and %s",telescope.minFocalLength.toString(),telescope.maxFocalLength.toString());
+          validationResult = false;
+        }
+        break;
+      case "fNumber":
+        const fNumber=(data.valueCandidate as number);
+        if((fNumber>telescope.fNumberMax||fNumber<telescope.fNumberMin)&&telescope.variableFNumber){
+          data.errorMessage=localize("the fnumber must be between %s and %s",telescope.fNumberMin.toString(),telescope.fNumberMax.toString());
+          validationResult = false;
+        }
+        if((fNumber<(this.exposureData.focalLength/telescope.aperture))&&telescope.variableFNumber){
+          data.errorMessage=localize("the fnumber must be bigger than %s",(this.exposureData.focalLength/telescope.aperture).toString());
+          validationResult = false;
+        }
+
+      break;
+    }
+
+    args.returnValue=validationResult;
+  }
+
 }

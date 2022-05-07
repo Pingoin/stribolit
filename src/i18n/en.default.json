@@ -12,6 +12,7 @@
     "telescope":"Telescope",
     "focalLength":"Focal Length",
     "fNumber":"F-Number",
-    "declination":"Declination"
+    "declination":"Declination",
+    "the focal legth must be between %s and %s":"The focal legth must be between %s and %s"
   }
   

@@ -12,5 +12,6 @@
   "telescope":"Teleskop",
   "focalLength":"Brennweite",
   "fNumber":"Blendenzahl",
-  "declination":"Deklination"
+  "declination":"Deklination",
+  "the focal legth must be between %s and %s":"Die Brennweite muss zwischen %s und %s liegen"
 }

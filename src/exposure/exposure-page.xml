@@ -5,14 +5,29 @@
     <ActionBar>
         <NavigationButton visibility="hidden"></NavigationButton>
         <GridLayout columns="50, *">
-            <Label class="action-bar-title" text="{{L('exposureTime') + ' '+ L('calculations') }}" colSpan="2"/>
-            <Label class="fas" text="&#xf0c9;" tap="onDrawerButtonTap"/>
+            <Label class="action-bar-title"
+                text="{{L('exposureTime') + ' '+ L('calculations') }}"
+                colSpan="2"/>
+            <Label class="fas"
+                text="&#xf0c9;"
+                tap="onDrawerButtonTap"/>
         </GridLayout>
     </ActionBar>
 
-    <StackLayout class="page__content" height="100%">
-            <df:RadDataForm row="0" id="myDataForm" source="{{ exposureData }}" propertyCommitted="{{ dfPropertyCommit }}" commitMode="Immediate" metadata="{{ exposureMetadata }}"/>
+    <StackLayout class="page__content"
+        height="100%">
+        <df:RadDataForm row="0"
+            id="myDataForm"
+            source="{{ exposureData }}"
+            propertyCommitted="{{ dfPropertyCommit }}"
+            commitMode="Immediate"
+            metadata="{{ exposureMetadata }}"
+            propertyValidate="{{ dfPropertyValidate }}"/>
         <StackLayout class="hr" />
-        <df:RadDataForm row="0" id="myDataForm" source="{{ resultData }}" metadata="{{ resultMetadata }}" isReadOnly="true"/>
+        <df:RadDataForm row="0"
+            id="myDataForm"
+            source="{{ resultData }}"
+            metadata="{{ resultMetadata }}"
+            isReadOnly="true"/>
     </StackLayout>
 </Page>

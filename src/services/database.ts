@@ -109,7 +109,7 @@ export class Database {
             {
                 interface:"Telescope",
                 name:"generic",
-                aperture:38,
+                aperture:25,
                 focalLength:0,
                 variableFocalLength:true,
                 minFocalLength:18,

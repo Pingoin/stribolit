@@ -34,6 +34,12 @@ export class AppRootViewModel extends Observable {
       nameShown:localize("settings"),
       lineAbove:true
     },
+    {
+      symbol: String.fromCharCode(parseInt('f197', 16)),
+      title:"telescopes",
+      nameShown:localize("telescopeList"),
+      lineAbove:true
+    },
   ]
 
 }

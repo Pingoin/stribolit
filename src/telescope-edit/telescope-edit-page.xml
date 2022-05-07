@@ -1,0 +1,23 @@
+<Page navigatingTo="onNavigatingTo"
+  xmlns="http://schemas.nativescript.org/tns.xsd"
+  xmlns:df="nativescript-ui-dataform">
+
+  <ActionBar>
+    <NavigationButton visibility="hidden"></NavigationButton>
+    <GridLayout columns="50, *">
+      <Label class="action-bar-title"
+        text="Home"
+        colSpan="2"/>
+      <Label class="fas"
+        text="&#xf0c9;"
+        tap="onDrawerButtonTap"/>
+    </GridLayout>
+  </ActionBar>
+
+  <StackLayout height="100%">
+    <df:RadDataForm row="0"
+      id="myDataForm"
+      source="{{ telescope }}"
+      commitMode="Immediate"/>
+  </StackLayout>
+</Page>
